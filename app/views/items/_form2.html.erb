@@ -1,0 +1,77 @@
+<%= form_for @item, html: {class: 'form'} do |f| %>		
+		<!-- 
+				<% if @item.errors.present? %>
+				<%= @item.errors.messages %>
+				<%end%>
+	 	-->
+ 		<div class="form-group <%= @item.errors[:title].present? ? 'has-error' : '' %>">
+			<%= f.label :title, 'Title *', class: 'control-label' %>
+			<%= f.text_field :title, class: "form-control", placeholder: "Title", required: 'true' %>
+			<% if @item.errors[:title].present? %>				
+				<span id="helpBlock2" class="help-block col-sm-12"><%= @item.errors[:title].join(", ")%></span>
+			<%end%>
+		</div>
+		
+		
+		<% if @item.categories_items.present? %>
+			<%= fields_for "category[]", @item.categories_items.new do |category| %>
+				<% #categories = @item.categories.map(&:name) %>
+				<% @item.categories_items.each do |cat| %>
+					
+					<div class="">
+						<div class="row">
+							<div class="form-group col-xs-10 category_list">					
+								<%= category.label :category_id, 'Category *', class: 'control-label' %>
+								 <%= category.select :category_id, options_for_select(@item.categories.map{ |c| [c.name, c.id]}, (cat.category.name if cat.category.present?) ) , {},  {required: 'true', autofocus: 'true', :class => "form-control"} %> 
+							</div>	
+							<div class="col-xs-2">		
+								<a class="btn btn-success add-btn" id="add-category"><span class="fa fa-plus"></span></a>
+							</div>
+						</div>
+					</div>
+				<% end %>
+				<div id="add-field">
+					
+				</div>
+			<% end %>
+		<% end %>
+
+		<%= fields_for "category[]", @item.categories_items.new do |category| %>
+			<div class="">
+				<div class="row">
+					<div class="form-group col-xs-10 category_list">					
+						<%= category.label :category_id, 'Category *', class: 'control-label' %>
+						<%= category.select :category_id, Category.all.collect { |p| [ p.name, p.id ] },{include_blank: true}, {required: 'true', autofocus: 'true', class: 'form-control'} %>
+					</div>	
+					<div class="col-xs-2">		
+						<a class="btn btn-success add-btn" id="add-category"><span class="fa fa-plus"></span></a>
+					</div>
+				</div>
+			</div>
+
+			<div id="add-field">
+				
+			</div>
+		<% end %>
+
+
+
+
+		<div class="form-group">			
+			<%= f.submit 'Add', class: "btn btn-primary col-xs-12" %>
+		</div>
+<% end %>
+
+<script type="text/javascript">
+	
+
+	$('#add-category').click(function(){		
+		$('#add-field').append('<div class="row"><div class="form-group col-xs-10 category_list">'+$(".category_list").html()+'</div><div class="col-xs-2" onclick="$(this).closest(\'.row\').remove()"><a class="btn btn-danger add-btn remove" ><span class="fa fa-minus" ></span></a></div></div>');
+	});
+
+	// $(".remove").click(function(){
+ //    console.log("hi");
+ //    $(this).hide();
+
+ //  });
+</script>

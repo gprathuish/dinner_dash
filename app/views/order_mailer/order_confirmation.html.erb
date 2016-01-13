@@ -1,0 +1,30 @@
+<h1>OrderMailer#order_confirmation</h1>
+
+<p>
+  <%= @user.first_name %>,  
+</p>
+
+<p>This is your order (<%= @order.id %>) confirmation.</p>
+
+<table class="table table-striped ">
+	<tr>
+		<th>#</th>
+		<th>Item</th>
+		<th>Unit Price</th>
+		<th>Units</th>
+		<th>Cost</th>
+	</tr>	
+	<% @items.each_with_index do |item, index| %>
+	<tr>
+		<td><%= index + 1%></td>
+		<td><%= item.item.title %></td>
+		<td>$. <%= item.price.to_f %> <span class="pull-right">x</span></td>
+		<td><%= item.unit %><span class="pull-right">=</span></td>
+		<td>$. <%= (item.price * item.unit).to_f %></td>
+	</tr>	
+	<%end%>
+	<tr>
+		<td colspan="4"> <strong>Total</strong> </td>
+		<td><strong>$. <%= @total %></strong></td>
+	</tr>
+</table>

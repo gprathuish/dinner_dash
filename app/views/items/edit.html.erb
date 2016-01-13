@@ -1,0 +1,15 @@
+<%= title "Edit - Item"%>
+
+<%= render 'link_to_new' %>
+
+<h3><%= yield(:title) %></h3>
+
+
+<div class="row">
+<div class="col-sm-5">
+	<%= render 'form' %>
+</div>
+</div>
+
+<br>
+<%= link_to 'Back', items_path, class: "btn btn-default btn-sm" %>

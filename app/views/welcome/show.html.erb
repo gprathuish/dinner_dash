@@ -1,0 +1,33 @@
+<div class="thumbnail">
+	<div class="food-type pull-right">
+    <span class="fa fa-circle <%= @item.item_type == 'veg' ? 'green' : 'red' %>"></span>
+  </div>
+	 <% if @item.pictures.first.present? %>
+      <%= image_tag @item.pictures.first.picture_url, :alt => "home image", :width => "100%", :height => "", :title => "Click here to return to Home" %>      
+    <% else %>
+      <img src="http://placehold.it/320x150" alt="">
+    <% end %>
+</div>
+
+<h2><%= title_capitalize @item.title %></h2>
+<hr>
+<p><%= @item.description.capitalize%></p>
+<hr>
+
+<div class="row">
+	<div class="col-sm-8">
+		<h4 class="green">Price: <%= cost @item.price %></h4>
+	</div>
+	<div class="col-sm-4">
+		<div class="ratings">
+		  <p class="pull-right">15 reviews</p>
+		  <p class="red"> Rating: 
+		      <span class="glyphicon glyphicon-star"></span>
+		      <span class="glyphicon glyphicon-star"></span>
+		      <span class="glyphicon glyphicon-star"></span>
+		      <span class="glyphicon glyphicon-star"></span>
+		      <span class="glyphicon glyphicon-star"></span>
+		  </p>
+		</div>
+	</div>
+</div>

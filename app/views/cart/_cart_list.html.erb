@@ -1,0 +1,45 @@
+<table class="table table-striped ">
+	<tr>
+		<th>#</th>
+		<th>Item</th>
+		<th>Unit Price</th>
+		<th class="text-center">Units</th>
+		<th class="text-center">Cost</th>
+	</tr>
+	<% total = 0%>
+	<% @cart_items.each_with_index do |item, index| %>
+	<tr>
+		<td><%= index + 1%></td>
+		<td><%= item.item.title %></td>
+		<td><%= cost item.price %> <span class="pull-right">x</span></td>
+		<td class="text-center">
+			<%= link_to add_to_cart_path(item.item.id, value: -1), remote: true do %>
+				<span class="glyphicon glyphicon-minus"> </span>
+			<%end%>
+			<div class="btn btn-info btn-sm">
+				 <%= item.unit %> 
+			</div>
+			<%= link_to add_to_cart_path(item.item.id, value: 1), remote: true do %>
+				<span class="glyphicon glyphicon-plus"> </span>
+			<%end%>
+			<span class="pull-right">=</span>
+		</td>
+		<td class="text-right"><%= cost (item.price * item.unit) %></td>		
+		<% total += item.price * item.unit %>
+	</tr>	
+	<%end%>
+	<tr class="warning">
+		<td colspan="4" class="text-right"> <strong>Total</strong> </td>
+		<td class="text-right"><strong><%= cost total %></strong></td>
+	</tr>
+</table>
+
+<% unless @cart_items.empty? %>
+	<%= link_to	check_out_path("paypal") do %>
+		<img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="right" style="margin-right:7px;">
+	<%end%>
+
+	<%= link_to	"Clear Cart",cart_path(current_cart.id) , method: :delete, class: "btn btn-danger"%>
+	<%= link_to	"Cash On Delivery (COD)",check_out_path("cash_on_delvery"), class: "btn btn-primary"%>
+	<%= link_to	"Check Out",check_out_path("active_merchant"), class: "btn btn-primary"%>
+<% end %>

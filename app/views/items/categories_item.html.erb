@@ -1,0 +1,7 @@
+<tr>
+	<td><%=  %></td>
+	<td><%= link_to item.title, item_path(item.id) %></td>
+	<td><%= item.categories.map(&:name)[0] %></td>
+	<td><%= link_to 'Edit', edit_item_path(item.id), class: "btn btn-info btn-xs" %></td>
+	<td><%= link_to 'Delete', item_path(item.id), method: :delete,class: "btn btn-danger btn-xs" %></td>
+</tr>

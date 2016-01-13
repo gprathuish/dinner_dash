@@ -1,0 +1,30 @@
+<h1>Items in Order No: <%= params[:id] %></h1>
+
+<table class="table table-striped ">
+	<tr>
+		<th>#</th>
+		<th>Item</th>
+		<th>Unit Price</th>
+		<th class="text-center">Units</th>
+		<th class="text-center">Cost</th>
+	</tr>
+	<% total = 0%>
+	<% @order_items.each_with_index do |item, index| %>
+	<tr>
+		<td><%= index + 1%></td>
+		<td><%= item.item.title %></td>
+		<td><%= cost item.price %> <span class="pull-right">x</span></td>
+		<td class="text-center"><%= item.unit %><span class="pull-right">=</span></td>
+		<td class="text-right"><%= cost (item.price * item.unit) %></td>		
+		<% total += item.price * item.unit %>
+	</tr>	
+	<%end%>
+	<tr class="warning">
+		<td colspan="4" class="text-right"> <strong>Total</strong> </td>
+		<td class="text-right"><strong><%= cost total %></strong></td>
+	</tr>
+</table>
+
+
+<%= link_to	"Back",orders_path, class: "btn btn-default"%>
+

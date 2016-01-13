@@ -1,0 +1,73 @@
+<div class="row carousel-holder">
+  <div class="col-md-12">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item active">
+            <!-- <img class="slide-image" src="http://placehold.it/850x300" alt=""> -->
+            <%= image_tag 'banner1', size: "850x300", class: "banner-img" %>    
+        </div>
+        <div class="item">
+            <%= image_tag 'banner2', size: "850x300", class: "banner-img" %>    
+        </div>
+        <div class="item">
+            <%= image_tag 'banner3', size: "850x300", class: "banner-img" %>    
+        </div>
+        <div class="item">
+            <%= image_tag 'banner4', size: "850x300", class: "banner-img" %>    
+        </div>
+      </div>
+      <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+      <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </a>
+    </div>
+  </div>
+</div>
+<br>
+
+<div class="row">
+  <% @items.each do |item| %>
+    <div class="col-sm-4 col-lg-4 col-md-4">
+        <div class="thumbnail">
+          <div class="food-type pull-right">
+            <span class="fa fa-circle <%= item.item_type == 'veg' ? 'green' : 'red' %>"></span>
+          </div>
+          
+            <% if item.pictures.first.present? %>            
+              <%= image_tag item.pictures.first.picture_url, class: "thumb-img", :alt => item.title, :title => item.title %>
+            <% else %>
+              <img src="http://placehold.it/320x150" alt="">
+            <% end %>
+          
+            
+            <div class="caption">
+                <h4 class="pull-right"><%= cost item.price%></h4>
+                <h4><a href="#"><%= link_to (title_capitalize truncate(item.title, length: 15)), welcome_path(item.id)%></a>
+                </h4>
+                <p><%= truncate(item.description, length: 100) %></p>                
+                <%= link_to "Add Cart",add_to_cart_path(item.id), remote: true, class: "btn btn-primary"%>
+                <%= link_to "View", welcome_path(item.id), class: "btn btn-info pull-right" %>
+            </div>
+
+
+            <div class="ratings">
+                <p class="pull-right">15 reviews</p>
+                <p>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+  <% end %>
+</div>

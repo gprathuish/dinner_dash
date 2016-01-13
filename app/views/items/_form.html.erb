@@ -1,0 +1,67 @@
+<%= form_for @item, html: {class: 'form', multipart: true} do |f| %>		
+		<!-- 
+				<% if @item.errors.present? %>
+				<%= @item.errors.messages %>
+				<%end%>
+	 	-->
+ 		<div class="form-group <%= @item.errors[:title].present? ? 'has-error' : '' %>">
+			<%= f.label :title, 'Title *', class: 'control-label' %>
+			<%= f.text_field :title, class: "form-control", placeholder: "Title", required: 'true' %>
+			<% if @item.errors[:title].present? %>				
+				<span id="helpBlock2" class="help-block col-sm-12"><%= @item.errors[:title].join(", ")%></span>
+			<%end%>
+		</div>
+
+		<div class="form-group <%= @item.errors[:description].present? ? 'has-error' : '' %>">
+			<%= f.label :description, 'Description *', class: 'control-label' %>
+			<%= f.text_area :description, class: "form-control", placeholder: "Description", required: 'true' %>
+			<% if @item.errors[:description].present? %>				
+				<span id="helpBlock2" class="help-block col-sm-12"><%= @item.errors[:description].join(", ")%></span>
+			<%end%>
+		</div>
+
+		<div class="form-group <%= @item.errors[:price].present? ? 'has-error' : '' %>">
+			<%= f.label :price, 'Price *', class: 'control-label' %>			
+			<%= f.text_field :price, class: "form-control", placeholder: "Price", required: 'true' %>
+			<% if @item.errors[:price].present? %>				
+				<span id="helpBlock2" class="help-block col-sm-12"><%= @item.errors[:price].join(", ")%></span>
+			<%end%>
+		</div>
+
+		<div class="form-group <%= @item.errors[:item_type].present? ? 'has-error' : '' %>">
+			<%= f.label :item_type, 'Type *', class: 'control-label' %>
+			<br>
+			<label class="radio-inline">
+				<%= f.radio_button(:item_type, "veg") %> Veg
+			</label>
+			<label class="radio-inline">
+				<%= f.radio_button(:item_type, "non-veg") %> Non-Veg
+			</label>
+
+			<% if @item.errors[:item_type].present? %>				
+				<span id="helpBlock2" class="help-block col-sm-12"><%= @item.errors[:item_type].join(", ")%></span>
+			<%end%>
+		</div>
+
+		<%= f.fields_for :pictures do |build| %>
+			<div class="form-group <%= @item.errors[:picture].present? ? 'has-error' : '' %>">				
+				<%= build.label :picture, 'Picture *', class: 'control-label' %>
+				<%= build.file_field :picture, class: "form-control", placeholder: "Add Picture" %>
+				<% if @item.errors[:picture].present? %>				
+					<span id="helpBlock2" class="help-block col-sm-12"><%= @item.errors[:picture].join(", ")%></span>
+				<%end%>
+			</div>
+		<% end %>
+		
+		<%= f.fields_for :categories_items do |build| %>
+			<%= render 'categories_item_fields', f: build %>
+		<% end %>
+
+		<div class="form-group">
+			<%= link_to_add_fields "Add Category", f, :categories_items %>			
+		</div>
+
+		<div class="form-group">			
+			<%= f.submit class: "btn btn-primary col-xs-12" %>
+		</div>
+<% end %>

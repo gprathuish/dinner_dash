@@ -1,0 +1,19 @@
+<%= form_for @category, html: {class: 'form'} do |f| %>		
+	<!-- 
+			<% if @category.errors.present? %>
+			<%= @category.errors.messages %>
+			<%end%>
+	 -->		
+ 		<div class="form-group <%= @category.errors[:name].present? ? 'has-error' : '' %>">
+			<%= f.label :name, 'Category Name *', class: 'control-label' %>
+			<%= f.text_field :name, class: "form-control", placeholder: "Category Name" %>
+			<% if @category.errors[:name].present? %>				
+				<span id="helpBlock2" class="help-block col-sm-12"><%= @category.errors[:name].join(", ")%></span>
+			<%end%>
+		</div>
+		
+		<div class="form-group">			
+			<%= f.submit class: "btn btn-primary col-xs-12" %>
+		</div>
+
+	<% end %>

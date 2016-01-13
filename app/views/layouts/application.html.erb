@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DinnerDash - <%= yield(:title) || "Welcome" %></title>  
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<div class="container fixed-navbar">
+	  <%= render 'shared/menu' %>
+	</div>
+	
+	<!-- Page Content -->
+  <div class="container">
+  	<br>
+      <div class="row">
+          <div id="category-nav" class="col-md-3 affix-top">
+              <!-- <p class="lead">Shop Name</p> -->
+              <div class="list-group">
+                <%= link_to "Categories", root_path, class: "list-group-item active"%>            
+              	<% Category.all.each do |cat| %>
+              		<%= link_to cat.name.capitalize, index_path(cat.id), class: "list-group-item" %>
+                <%end%>
+              </div>
+          </div>
+         
+          <div class="col-md-9">
+            <% flash.each do |key, value| %>
+              <div class="alert alert-<%= key%>" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <%= value %>
+              </div>
+            <% end %>
+              <%= yield %>
+          </div>
+      </div>
+  </div>
+  <!-- /.container -->
+
+  <div class="container">
+      <hr>
+      <!-- Footer -->
+      <footer>
+          <div class="row">
+              <div class="col-lg-12">
+                  <p>Copyright &copy; Dinner Dash <%= Time.now.year %></p>
+              </div>
+          </div>
+      </footer>
+  </div>
+  <!-- /.container -->	
+
+  <!-- Cart Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body" id ="display-cart">
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script type="text/javascript">
+  	$(function () {
+  	  $('[data-toggle="tooltip"]').tooltip();          
+  	})
+  </script>
+
+<script type="text/javascript"> 
+// $(window).on('beforeunload', function(){
+//   alert();
+//       return 'Are you sure you want to leave?';
+// });
+</script>
+
+ 
+</body>
+</html>
